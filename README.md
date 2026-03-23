@@ -1,1 +1,0 @@
-this wheather app developed by muzamil
