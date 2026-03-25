@@ -5,17 +5,14 @@ const weatherDetails = document.querySelector('.weather-details');
 const error404 = document.querySelector('.not-found');
 
 search.addEventListener('click', () => {
-
     const APIKey = '210194ffc8eee695f58eb64e23c9f79c';
     const city = document.querySelector('.search-box input').value;
 
-    if (city === '')
-        return;
+    if (city === '') return;
 
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${APIKey}`)
         .then(response => response.json())
         .then(json => {
-
             if (json.cod === '404') {
                 container.style.height = '400px';
                 weatherBox.style.display = 'none';
@@ -38,23 +35,18 @@ search.addEventListener('click', () => {
                 case 'Clear':
                     image.src = 'images/clear.png';
                     break;
-
                 case 'Rain':
                     image.src = 'images/rain.png';
                     break;
-
                 case 'Snow':
                     image.src = 'images/snow.png';
                     break;
-
                 case 'Clouds':
                     image.src = 'images/cloud.png';
                     break;
-
                 case 'Haze':
                     image.src = 'images/mist.png';
                     break;
-
                 default:
                     image.src = '';
             }
@@ -64,12 +56,24 @@ search.addEventListener('click', () => {
             humidity.innerHTML = `${json.main.humidity}%`;
             wind.innerHTML = `${parseInt(json.wind.speed)}Km/h`;
 
-            weatherBox.style.display = 'block' 
-            weatherDetails.style.display = '';
-            weatherBox.classList.add('fadeIn');
-            weatherDetails.classList.add('fadeIn');
+            weatherBox.style.display = 'block';
+            weatherDetails.style.display = 'block';
             container.style.height = '590px';
 
+            // GSAP animations
+            gsap.from(".weather-box", {
+                duration: 1,
+                opacity: 0,
+                y: 30,
+                ease: "power2.out"
+            });
 
+            gsap.from(".weather-details", {
+                duration: 1,
+                delay: 0.3,
+                opacity: 0,
+                y: 30,
+                ease: "power2.out"
+            });
         });
 });
